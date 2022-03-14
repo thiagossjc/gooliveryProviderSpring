@@ -9,5 +9,4 @@ public class EngreneMcApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(EngreneMcApplication.class, args);
 	}
-
 }

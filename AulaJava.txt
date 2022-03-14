@@ -1,0 +1,23 @@
+Java
+
+Ctrl + shift + o = importa o pacote que vc quer trabalhar
+
+
+ git config --global user.email "thiagossjc@gmail.com"
+
+ git remote add origin https://github.com/thiagossjc/engrenemc.git
+
+
+//RestFull JavaSpring
+arriba de la classe las anotaciones
+@RestController // Informar que é um rest
+@RequestMapping(value="/categorys") //poner la ruta
+
+
+MySQL shutdown unexpectedly.
+2:54:01  [mysql] 	This may be due to a blocked port, missing dependencies, 
+2:54:01  [mysql] 	improper privileges, a crash, or a shutdown by another method.
+2:54:01  [mysql] 	Press the Logs button to view error logs and check
+2:54:01  [mysql] 	the Windows Event Viewer for more clues
+2:54:01  [mysql] 	If you need more help, copy and post this
+2:54:01  [mysql] 	entire log window on the forums
