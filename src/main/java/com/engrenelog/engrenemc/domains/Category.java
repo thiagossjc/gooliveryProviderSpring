@@ -28,13 +28,24 @@ import javax.persistence.ManyToMany;
 		@Id
 		@GeneratedValue(strategy=GenerationType.IDENTITY)
 		private Integer id;
+		
 		private String name;
 		
 		@ManyToMany(mappedBy="categorys")
 		private List<Product> products = new ArrayList<>();
 
+		
+
 		public Category() {
 			
+		}
+
+		public List<Product> getProducts() {
+			return products;
+		}
+
+		public void setProducts(List<Product> products) {
+			this.products = products;
 		}
 
 		public Category(Integer id, String name) {
@@ -73,6 +84,6 @@ import javax.persistence.ManyToMany;
 			if (getClass() != obj.getClass())
 				return false;
 			Category other = (Category) obj;
-			return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+			return Objects.equals(id, other.id);
 		}
 }
