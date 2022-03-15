@@ -7,10 +7,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.engrenelog.engrenemc.domains.Address;
 import com.engrenelog.engrenemc.domains.Category;
 import com.engrenelog.engrenemc.domains.City;
+import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.domains.Product;
 import com.engrenelog.engrenemc.domains.State;
+import com.engrenelog.engrenemc.domains.enums.TypeCustomer;
 import com.engrenelog.engrenemc.repositorys.CategoryRepository;
 import com.engrenelog.engrenemc.repositorys.CityRepository;
 import com.engrenelog.engrenemc.repositorys.ProductRepository;
@@ -55,6 +58,15 @@ public class EngreneMcApplication implements CommandLineRunner{
 		City cit4 = new City(null,"Duque de Caxias",state2);
 		City cit5 = new City(null,"São Paulo",state3);
 		City cit6 = new City(null,"Barueri",state3);
+		
+		
+		Customer cli1 = new Customer(null,"Maria Silva","maria@gmail.com","2343242342",TypeCustomer.PhisicalPerson);
+		cli1.getPhones().addAll(Arrays.asList("34324324","9823424"));
+		
+		Address e1 = new Address(null,"Rua Maria Lobato","1","Copacabana", "25001",cli1,cit1);
+		Address e2 = new Address(null,"Rua Maria Lobato","1","Copacabana", "25001",cli1,cit3);	
+		Address e3 = new Address(null,"Rua Maria Lobato","1","Copacabana", "25001",cli1,cit3);	
+		
 		
 		state1.getCities().addAll(Arrays.asList(cit1,cit2));
 		state2.getCities().addAll(Arrays.asList(cit3,cit4));
