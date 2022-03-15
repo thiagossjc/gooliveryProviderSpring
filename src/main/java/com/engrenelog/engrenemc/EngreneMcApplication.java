@@ -14,8 +14,10 @@ import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.domains.Product;
 import com.engrenelog.engrenemc.domains.State;
 import com.engrenelog.engrenemc.domains.enums.TypeCustomer;
+import com.engrenelog.engrenemc.repositorys.AddressRepository;
 import com.engrenelog.engrenemc.repositorys.CategoryRepository;
 import com.engrenelog.engrenemc.repositorys.CityRepository;
+import com.engrenelog.engrenemc.repositorys.CustomerRepository;
 import com.engrenelog.engrenemc.repositorys.ProductRepository;
 import com.engrenelog.engrenemc.repositorys.StateRepository;
 
@@ -30,6 +32,10 @@ public class EngreneMcApplication implements CommandLineRunner{
 	private StateRepository stateRepo;
 	@Autowired
 	private CityRepository cityRepo;
+	@Autowired
+	private AddressRepository addressRepo;
+	@Autowired
+	private CustomerRepository customerRepo;
 	
 	
 
@@ -78,10 +84,16 @@ public class EngreneMcApplication implements CommandLineRunner{
 		prod1.getCategorys().addAll(Arrays.asList(cat1));
 		prod2.getCategorys().addAll(Arrays.asList(cat1,cat2));
 		prod3.getCategorys().addAll(Arrays.asList(cat2));
+
+		cli1.getAddress().addAll(Arrays.asList(e1,e2));
 		
 		categRepo.saveAll(Arrays.asList(cat1,cat2));
 		prodRepo.saveAll(Arrays.asList(prod1,prod2,prod3));
 		stateRepo.saveAll(Arrays.asList(state1,state2,state3));
 		cityRepo.saveAll(Arrays.asList(cit1,cit2,cit3,cit4,cit5,cit6));
+		
+		customerRepo.saveAll(Arrays.asList(cli1));
+		addressRepo.saveAll(Arrays.asList(e1,e2));
+		
 	}
 }
