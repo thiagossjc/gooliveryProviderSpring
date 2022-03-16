@@ -1,0 +1,23 @@
+
+
+KUBERNATE
+
+es un sistema de código libre para la automatización del despliegue,
+ajuste de escala y manejo de aplicaciones en contenedores​ que fue originalmente
+diseñado por Google y donado a la Cloud Native Computing Foundation. Soporta diferentes
+entornos para la ejecución de contenedores, incluido Docker
+
+implementar y gestionar un clúster de aplicaciones en contenedores y sirve también para establecer tu propia plataforma CaaS.
+
+
+DOCKER
+
+El sistema de software de TI llamado "Docker" es la tecnología de organización en contenedores que posibilita la creación y el uso de los
+contenedores de Linux®.
+La comunidad open source Docker se encarga de mejorar estas tecnologías para beneficiar a todos los usuarios.
+La empresa, Docker Inc., se basa en el trabajo de la comunidad Docker para aumentar la seguridad de las herramientas y comparte los avances con el
+resto de la comunidad. Entonces, brinda soporte a las tecnologías mejoradas y reforzadas para los clientes empresariales.
+
+Con Docker, podrá utilizar los contenedores como máquinas virtuales muy livianas y modulares, y obtendrá la flexibilidad necesaria para crearlos,
+implementarlos, copiarlos y trasladarlos de un entorno a otro, lo cual le permite optimizar sus aplicaciones para la nube.
+

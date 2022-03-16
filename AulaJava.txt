@@ -13,6 +13,8 @@ arriba de la classe las anotaciones
 @RestController // Informar que é um rest
 @RequestMapping(value="/categorys") //poner la ruta
 
+@RequestMapping(method=RequestMethod.GET)
+En cima dos métodos restfull con los Methodos
 
 MySQL shutdown unexpectedly.
 2:54:01  [mysql] 	This may be due to a blocked port, missing dependencies, 
@@ -21,3 +23,7 @@ MySQL shutdown unexpectedly.
 2:54:01  [mysql] 	the Windows Event Viewer for more clues
 2:54:01  [mysql] 	If you need more help, copy and post this
 2:54:01  [mysql] 	entire log window on the forums
+
+//Acrescentar no sistema
+spring.jpa.hibernate.ddl-auto=update
+
