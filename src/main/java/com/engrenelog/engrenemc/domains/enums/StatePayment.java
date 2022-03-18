@@ -6,7 +6,7 @@ public enum StatePayment {
 	Settled(2, "Quitado"),
 	Canceled(3,"Cancelado");
 	
-			private int id;
+			private Integer id;
 			private String description;
 			
 			private StatePayment(int id, String description) {
@@ -14,7 +14,7 @@ public enum StatePayment {
 				this.description = description;
 			}
 			
-			public int getID() {
+			public Integer getID() {
 				return id;
 			}
 			
@@ -35,3 +35,5 @@ public enum StatePayment {
 				throw new IllegalArgumentException("Id inválido "+ id);
 			}
 }
+
+

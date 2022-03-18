@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,8 +14,8 @@ import javax.persistence.OneToOne;
 import com.engrenelog.engrenemc.domains.enums.StatePayment;
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)  //mapeamento herança JOINED SEPARA LAS TABELAS
-public class Payment implements Serializable {
+@Inheritance(strategy=InheritanceType.JOINED)
+public abstract class Payment implements Serializable {
 	
 
 	private static final long serialVersionUID = 1L;
@@ -25,12 +23,12 @@ public class Payment implements Serializable {
 	@Id
 	private Integer id;
 	
-	private StatePayment statePay;
+	private Integer statePay;
 	
 	@OneToOne
 	@JoinColumn(name="order_id")
 	@MapsId
-	private Order order;
+	private Order order;	
 	
 	
 	public Payment() {
@@ -40,7 +38,7 @@ public class Payment implements Serializable {
 	public Payment(Integer id, StatePayment statePay, Order order) {
 		super();
 		this.id = id;
-		this.statePay = statePay;
+		this.statePay = statePay.getID();
 		this.order = order;
 	}
 
@@ -55,10 +53,10 @@ public class Payment implements Serializable {
 		this.id = id;
 	}
 	public StatePayment getStatePay() {
-		return statePay;
+		return StatePayment.ToEnum(statePay);
 	}
 	public void setStatePay(StatePayment statePay) {
-		this.statePay = statePay;
+		this.statePay = statePay.getID();
 	}
 	
 	

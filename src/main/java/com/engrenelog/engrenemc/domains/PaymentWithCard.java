@@ -30,4 +30,5 @@ public class PaymentWithCard extends Payment {
 	public void setNumberInstallments(Integer numberInstallments) {
 		this.numberInstallments = numberInstallments;
 	}
+	
 }

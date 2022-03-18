@@ -2,6 +2,9 @@ package com.engrenelog.engrenemc.domains;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -10,7 +13,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Order implements Serializable {
@@ -31,20 +37,22 @@ public class Order implements Serializable {
 	private Customer customer;
 	
 	@ManyToOne
-	@JoinColumn(name="delivery_address_id")
-	
+	@JoinColumn(name="address_id")
 	private Address deliveryAddress;
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy="id.order")
+	private Set<OrderItem> itens = new HashSet<>();
+	
 	public Order(){
-		
 	}
 
-	public Order(Integer id, Date instante, Payment payment, Customer customer) {
+	public Order(Integer id, Date instante, Customer customer, Address deliveryAddress) {
 		super();
 		this.id = id;
 		this.instante = instante;
-		this.payment = payment;
 		this.customer = customer;
+		this.deliveryAddress = deliveryAddress;	
 	}
 
 	public Integer getId() {
@@ -77,7 +85,7 @@ public class Order implements Serializable {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
+	} 
 
 	public Address getDeliveryAddress() {
 		return deliveryAddress;
@@ -85,6 +93,31 @@ public class Order implements Serializable {
 
 	public void setDeliveryAddress(Address deliveryAddress) {
 		this.deliveryAddress = deliveryAddress;
+	}
+
+	public Set<OrderItem> getItens() {
+		return itens;
+	}
+
+	public void setItens(Set<OrderItem> itens) {
+		this.itens = itens;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Order other = (Order) obj;
+		return Objects.equals(id, other.id);
 	}
 	
 	

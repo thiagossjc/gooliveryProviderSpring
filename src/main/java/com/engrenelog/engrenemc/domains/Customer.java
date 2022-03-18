@@ -43,11 +43,10 @@ public class Customer implements Serializable{
 	@CollectionTable(name="phones")
 	private Set<String> phones = new HashSet<>();
 
-	@OneToMany(mappedBy="customer") //atrubuto customer de Order
+	@OneToMany(mappedBy="customer")
 	private List<Order> orders = new ArrayList<>();
-	
+
 	public Customer() {
-		
 	}
 
 	public Customer(Integer id, String name, String email, String idCustmOrIdCompany, TypeCustomer typeC) {
@@ -57,6 +56,20 @@ public class Customer implements Serializable{
 		this.email = email;
 		this.idCustmOrIdCompany = idCustmOrIdCompany;
 		this.typeC = typeC.getID();
+	}
+
+	
+	
+	public List<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(List<Order> orders) {
+		this.orders = orders;
+	}
+
+	public void setTypeC(Integer typeC) {
+		this.typeC = typeC;
 	}
 
 	public Integer getId() {
@@ -120,6 +133,8 @@ public class Customer implements Serializable{
 	public int hashCode() {
 		return Objects.hash(id);
 	}
+	
+	
 
 	@Override
 	public boolean equals(Object obj) {

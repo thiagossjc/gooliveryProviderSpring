@@ -1,4 +1,9 @@
+CONTENEDOR
 
+consiste en agrupar y aislar entre sí aplicaciones o grupos de aplicaciones que se ejecutan sobre un mismo núcleo de sistema operativo.
+Los contenedores son una forma de virtualización del sistema operativo. Un solo contenedor se puede usar para ejecutar cualquier cosa,
+desde un microservicio o un proceso de software a una aplicación de mayor tamaño.
+... Estos clústeres se pueden gestionar mediante un orquestador de contenedores, como Kubernetes.
 
 KUBERNATE
 
@@ -20,4 +25,9 @@ resto de la comunidad. Entonces, brinda soporte a las tecnologías mejoradas y r
 
 Con Docker, podrá utilizar los contenedores como máquinas virtuales muy livianas y modulares, y obtendrá la flexibilidad necesaria para crearlos,
 implementarlos, copiarlos y trasladarlos de un entorno a otro, lo cual le permite optimizar sus aplicaciones para la nube.
+
+
+
+1400 euros para mudança
+2000 euros para luvas do aluguel
 

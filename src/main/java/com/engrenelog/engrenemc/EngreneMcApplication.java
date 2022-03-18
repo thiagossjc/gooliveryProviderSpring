@@ -1,5 +1,6 @@
 package com.engrenelog.engrenemc;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,13 +12,20 @@ import com.engrenelog.engrenemc.domains.Address;
 import com.engrenelog.engrenemc.domains.Category;
 import com.engrenelog.engrenemc.domains.City;
 import com.engrenelog.engrenemc.domains.Customer;
+import com.engrenelog.engrenemc.domains.Order;
+import com.engrenelog.engrenemc.domains.Payment;
+import com.engrenelog.engrenemc.domains.PaymentWithCard;
+import com.engrenelog.engrenemc.domains.PaymentWithTicket;
 import com.engrenelog.engrenemc.domains.Product;
 import com.engrenelog.engrenemc.domains.State;
+import com.engrenelog.engrenemc.domains.enums.StatePayment;
 import com.engrenelog.engrenemc.domains.enums.TypeCustomer;
 import com.engrenelog.engrenemc.repositorys.AddressRepository;
 import com.engrenelog.engrenemc.repositorys.CategoryRepository;
 import com.engrenelog.engrenemc.repositorys.CityRepository;
 import com.engrenelog.engrenemc.repositorys.CustomerRepository;
+import com.engrenelog.engrenemc.repositorys.OrderRepository;
+import com.engrenelog.engrenemc.repositorys.PaymentRepository;
 import com.engrenelog.engrenemc.repositorys.ProductRepository;
 import com.engrenelog.engrenemc.repositorys.StateRepository;
 
@@ -36,7 +44,10 @@ public class EngreneMcApplication implements CommandLineRunner{
 	private AddressRepository addressRepo;
 	@Autowired
 	private CustomerRepository customerRepo;
-	
+	@Autowired
+	private OrderRepository orderRepo;
+	@Autowired
+	private PaymentRepository paymRepo;
 	
 
 	public static void main(String[] args) {
@@ -69,9 +80,23 @@ public class EngreneMcApplication implements CommandLineRunner{
 		Customer cli1 = new Customer(null,"Maria Silva","maria@gmail.com","2343242342",TypeCustomer.PhisicalPerson);
 		cli1.getPhones().addAll(Arrays.asList("34324324","9823424"));
 		
+		Customer cli2 = new Customer(null,"José Silva","jose@gmail.com","2343242342",TypeCustomer.PhisicalPerson);
+		cli1.getPhones().addAll(Arrays.asList("34324324","9823424"));
+		
 		Address e1 = new Address(null,"Rua Maria Lobato","1","Copacabana", "25001",cli1,cit1);
 		Address e2 = new Address(null,"Rua Maria Lobato","1","Copacabana", "25001",cli1,cit3);	
 		Address e3 = new Address(null,"Rua Maria Lobato","1","Copacabana", "25001",cli1,cit3);	
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+		Order ord1 = new Order(null,sdf.parse("30/12/2040 10:32"),cli1, e1);
+		Order ord2 = new Order(null,sdf.parse("20/12/2012 11:32"),cli1,e2);
+		
+		Payment pay1 = new PaymentWithCard(null,StatePayment.Settled,ord1,6);
+		ord1.setPayment(pay1);
+		Payment pay2 = new PaymentWithTicket(null,StatePayment.Pendente,ord2,sdf.parse("20/10/2014 00:17"),null);
+		ord2.setPayment(pay2);
+		
+		cli1.getOrders().addAll(Arrays.asList(ord1,ord2));
 		
 		
 		state1.getCities().addAll(Arrays.asList(cit1,cit2));
@@ -91,9 +116,8 @@ public class EngreneMcApplication implements CommandLineRunner{
 		prodRepo.saveAll(Arrays.asList(prod1,prod2,prod3));
 		stateRepo.saveAll(Arrays.asList(state1,state2,state3));
 		cityRepo.saveAll(Arrays.asList(cit1,cit2,cit3,cit4,cit5,cit6));
-		
+		orderRepo.saveAll(Arrays.asList(ord1,ord2));		
 		customerRepo.saveAll(Arrays.asList(cli1));
 		addressRepo.saveAll(Arrays.asList(e1,e2));
-		
 	}
 }
