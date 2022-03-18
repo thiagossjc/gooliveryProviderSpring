@@ -13,6 +13,7 @@ import com.engrenelog.engrenemc.domains.Category;
 import com.engrenelog.engrenemc.domains.City;
 import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.domains.Order;
+import com.engrenelog.engrenemc.domains.OrderItem;
 import com.engrenelog.engrenemc.domains.Payment;
 import com.engrenelog.engrenemc.domains.PaymentWithCard;
 import com.engrenelog.engrenemc.domains.PaymentWithTicket;
@@ -24,6 +25,7 @@ import com.engrenelog.engrenemc.repositorys.AddressRepository;
 import com.engrenelog.engrenemc.repositorys.CategoryRepository;
 import com.engrenelog.engrenemc.repositorys.CityRepository;
 import com.engrenelog.engrenemc.repositorys.CustomerRepository;
+import com.engrenelog.engrenemc.repositorys.OrderItemRepository;
 import com.engrenelog.engrenemc.repositorys.OrderRepository;
 import com.engrenelog.engrenemc.repositorys.PaymentRepository;
 import com.engrenelog.engrenemc.repositorys.ProductRepository;
@@ -48,7 +50,8 @@ public class EngreneMcApplication implements CommandLineRunner{
 	private OrderRepository orderRepo;
 	@Autowired
 	private PaymentRepository paymRepo;
-	
+	@Autowired
+	private OrderItemRepository ordItemRepo;
 
 	public static void main(String[] args) {
 		SpringApplication.run(EngreneMcApplication.class, args);
@@ -119,5 +122,17 @@ public class EngreneMcApplication implements CommandLineRunner{
 		orderRepo.saveAll(Arrays.asList(ord1,ord2));		
 		customerRepo.saveAll(Arrays.asList(cli1));
 		addressRepo.saveAll(Arrays.asList(e1,e2));
+		
+		OrderItem	ip1 = new OrderItem(ord1,prod1,0.00,1,2000.00);
+		OrderItem   ip2 = new OrderItem(ord1,prod3,0.00,2,80.00);
+		OrderItem   ip3= new OrderItem(ord1,prod2,100.00,1,800.00);
+		
+		ord1.getItens().addAll(Arrays.asList(ip1,ip2));
+		ord2.getItens().addAll(Arrays.asList(ip3));
+		
+		prod1.getItens().addAll(Arrays.asList(ip1));
+		prod2.getItens().addAll(Arrays.asList(ip3));
+		prod3.getItens().addAll(Arrays.asList(ip2));
+		ordItemRepo.saveAll(Arrays.asList(ip1,ip2,ip3));
 	}
 }

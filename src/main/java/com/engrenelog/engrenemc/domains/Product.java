@@ -40,7 +40,7 @@ public class Product implements Serializable{
 	)
 	private List<Category> categorys = new ArrayList<>();
 	
-
+	
 	@OneToMany(mappedBy="id.product")	
 	private Set<OrderItem> itens = new HashSet<>();
 	
