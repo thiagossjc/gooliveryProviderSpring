@@ -14,6 +14,7 @@ import javax.persistence.OneToOne;
 
 import com.engrenelog.engrenemc.domains.enums.StatePayment;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -28,7 +29,7 @@ public abstract class Payment implements Serializable {
 	@Column(name="id_state_pay")
 	private Integer statePay;
 	
-	@JsonBackReference
+	@JsonIgnore
 	@OneToOne
 	@JoinColumn(name="order_customer_id")
 	@MapsId
