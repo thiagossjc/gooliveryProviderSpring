@@ -7,6 +7,7 @@ import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,20 +17,27 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
-public class Order implements Serializable {
+public class OrderCustomer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
+	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
 	private Date instante;
 	
-	@OneToOne(cascade=CascadeType.ALL,mappedBy="order")
+	@JsonManagedReference
+	@OneToOne(cascade=CascadeType.ALL,mappedBy="orderCustomer")
 	private Payment payment;
 	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="customer_id")
 	private Customer customer;
@@ -39,13 +47,13 @@ public class Order implements Serializable {
 	private Address deliveryAddress;
 	
 	
-	@OneToMany(mappedBy="id.order")
+	@OneToMany(mappedBy="id.orderCustomer")
 	private Set<OrderItem> itens = new HashSet<>();
 	
-	public Order(){
+	public OrderCustomer(){
 	}
 
-	public Order(Integer id, Date instante, Customer customer, Address deliveryAddress) {
+	public OrderCustomer(Integer id, Date instante, Customer customer, Address deliveryAddress) {
 		super();
 		this.id = id;
 		this.instante = instante;
@@ -116,7 +124,7 @@ public class Order implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Order other = (Order) obj;
+		OrderCustomer other = (OrderCustomer) obj;
 		return Objects.equals(id, other.id);
 	}
 	

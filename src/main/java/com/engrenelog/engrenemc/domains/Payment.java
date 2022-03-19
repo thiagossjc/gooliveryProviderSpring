@@ -3,6 +3,7 @@ package com.engrenelog.engrenemc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
@@ -12,6 +13,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.engrenelog.engrenemc.domains.enums.StatePayment;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
@@ -23,23 +25,25 @@ public abstract class Payment implements Serializable {
 	@Id
 	private Integer id;
 	
+	@Column(name="id_state_pay")
 	private Integer statePay;
 	
+	@JsonBackReference
 	@OneToOne
-	@JoinColumn(name="order_id")
+	@JoinColumn(name="order_customer_id")
 	@MapsId
-	private Order order;	
+	private OrderCustomer orderCustomer;	
 	
 	
 	public Payment() {
 		
 	}
 
-	public Payment(Integer id, StatePayment statePay, Order order) {
+	public Payment(Integer id, StatePayment statePay, OrderCustomer orderCustomer) {
 		super();
 		this.id = id;
 		this.statePay = statePay.getID();
-		this.order = order;
+		this.orderCustomer = orderCustomer;
 	}
 
 
@@ -61,12 +65,12 @@ public abstract class Payment implements Serializable {
 	
 	
 	
-	public Order getOrder() {
-		return order;
+	public OrderCustomer getOrderCustomer() {
+		return orderCustomer;
 	}
 
-	public void setOrder(Order order) {
-		this.order = order;
+	public void setOrderCustomer(OrderCustomer orderCustomer) {
+		this.orderCustomer = orderCustomer;
 	}
 
 	@Override

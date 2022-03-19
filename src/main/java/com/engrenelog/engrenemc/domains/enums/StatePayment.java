@@ -35,5 +35,3 @@ public enum StatePayment {
 				throw new IllegalArgumentException("Id inválido "+ id);
 			}
 }
-
-

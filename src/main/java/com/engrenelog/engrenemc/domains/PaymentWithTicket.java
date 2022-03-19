@@ -5,13 +5,17 @@ import java.util.Date;
 import javax.persistence.Entity;
 
 import com.engrenelog.engrenemc.domains.enums.StatePayment;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class PaymentWithTicket extends Payment {
 
 	private static final long serialVersionUID = 1L;
 	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date dateExpire;
+	
+	@JsonFormat(pattern="dd/MM/yyyy")
 	private Date datePayment;
 	
 	
@@ -20,9 +24,12 @@ public class PaymentWithTicket extends Payment {
 	}
 
 
-	public PaymentWithTicket(Integer id, StatePayment statePay, Order order, Date dateExpire, Date datePayment) {
-		super(id, statePay,order);
+	public PaymentWithTicket(Integer id, StatePayment statePay, OrderCustomer orderCustomer, Date dateExpire, Date datePayment) {
+		super(id, statePay,orderCustomer);
+		
+
 		this.dateExpire = dateExpire;
+		
 		this.datePayment = datePayment;
 	}
 

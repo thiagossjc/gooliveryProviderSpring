@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.engrenelog.engrenemc.domains.enums.TypeCustomer;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -44,7 +45,7 @@ public class Customer implements Serializable{
 	private Set<String> phones = new HashSet<>();
 
 	@OneToMany(mappedBy="customer")
-	private List<Order> orders = new ArrayList<>();
+	private List<OrderCustomer> orders = new ArrayList<>();
 
 	public Customer() {
 	}
@@ -59,12 +60,12 @@ public class Customer implements Serializable{
 	}
 
 	
-	
-	public List<Order> getOrders() {
+	@JsonBackReference
+	public List<OrderCustomer> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<OrderCustomer> orders) {
 		this.orders = orders;
 	}
 

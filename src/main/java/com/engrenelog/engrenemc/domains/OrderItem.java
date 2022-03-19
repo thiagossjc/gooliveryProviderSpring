@@ -3,8 +3,11 @@ package com.engrenelog.engrenemc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
@@ -13,6 +16,7 @@ public class OrderItem implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@JsonIgnore
 	@EmbeddedId
 	private OrderItemPK id = new OrderItemPK();
 	
@@ -25,19 +29,21 @@ public class OrderItem implements Serializable{
 	public OrderItem() {		
 	}
 
-	public OrderItem(Order order, Product product, Double discount, Integer quantity, Double price) {
+	public OrderItem(OrderCustomer orderCustomer, Product product, Double discount, Integer quantity, Double price) {
 		super();
-		id.setOrder(order);
+		
+		id.setOrderCustomer(orderCustomer);
 		id.setProduct(product);
 		this.discount = discount;
 		this.quantity = quantity;
 		this.price = price;
 	}
 
-	
-	public Order getOrder() {
-		return id.getOrder();
+	@JsonIgnore
+	public OrderCustomer getOrderCustomer() {
+		return id.getOrderCustomer();
 	}
+	
 	
 	public Product getProduct() {
 		return id.getProduct();
