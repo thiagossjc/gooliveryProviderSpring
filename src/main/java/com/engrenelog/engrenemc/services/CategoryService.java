@@ -1,4 +1,5 @@
 package com.engrenelog.engrenemc.services;
+import java.util.List;
 import java.util.Optional;
 
 import org.hibernate.ObjectNotFoundException;
@@ -41,5 +42,9 @@ public class CategoryService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("No es posible deletar unca categoria que possuí produtos");
 		}
+	}
+	
+	public List<Category> findAll(){
+		return repo.findAll();
 	}
 }
