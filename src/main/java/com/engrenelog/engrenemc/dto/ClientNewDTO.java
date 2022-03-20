@@ -2,20 +2,44 @@ package com.engrenelog.engrenemc.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
+import com.engrenelog.engrenemc.services.validation.CustomerInsert;
+
+//Anotación customizada para validar cpf y cnpj BR.
+@CustomerInsert
 public class ClientNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotEmpty(message="Preenchimento obrigatório!")
+	@Length(min=5, max=120,message="La talla mayor que 5 y menor que 120 ")
 	private String name;
-	private String email;
-	private String idCustmOrIdCompany;
-	private Integer typeC;
 	
+	@NotEmpty(message="Preenchimento obrigatório!")
+	@Email
+	private String email;
+	
+	
+	private Integer typeC;
+	@NotEmpty
+	private String idCustmOrIdCompany;
+	
+	
+	@NotEmpty(message="Preenchimento obrigatório!")
 	private String street;
+	@NotEmpty(message="Preenchimento obrigatório!")
 	private String complement;
+	@NotEmpty(message="Preenchimento obrigatório!")	
 	private String neighborhood;
+	@NotEmpty(message="Preenchimento obrigatório!")
 	private String postalCode;
 	
+	@NotEmpty(message="Preenchimento obrigatório!")
 	private String phone1;
+	
 	private String phone2;
 	private String phone3;
 	private Integer cityId;
