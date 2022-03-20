@@ -1,5 +1,6 @@
 package com.engrenelog.engrenemc.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.engrenelog.engrenemc.domains.Category;
 import com.engrenelog.engrenemc.domains.Customer;
-import com.engrenelog.engrenemc.dto.CategoryDTO;
+import com.engrenelog.engrenemc.dto.ClientNewDTO;
+import com.engrenelog.engrenemc.dto.CustomerDTO;
 import com.engrenelog.engrenemc.services.CustomerService;
 
 @RestController
@@ -33,6 +36,15 @@ public class CustomerResource {
 	
 		Customer obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
+	}
+	
+	@RequestMapping(method=RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody ClientNewDTO objDTO){
+		Customer obj = service.fromDTO(objDTO);
+		obj = service.insert(obj);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		return ResponseEntity.created(uri).build();
 	}
 	
 	@RequestMapping(value="/{id}",method=RequestMethod.PUT)

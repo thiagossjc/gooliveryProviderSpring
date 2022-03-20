@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.engrenelog.engrenemc.domains.Category;
-import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.dto.CategoryDTO;
 import com.engrenelog.engrenemc.repositorys.CategoryRepository;
 import com.engrenelog.engrenemc.services.exceptions.DataIntegrityException;
@@ -65,7 +64,8 @@ public class CategoryService {
 		return new Category(objDto.getId(),objDto.getName());
 	}
 	
-	private  void updateData(Customer newObj, Customer obj) {
+	private  void updateData(CategoryDTO newObj, Category obj) {
 		newObj.setName(obj.getName());
 	}
+	
 }

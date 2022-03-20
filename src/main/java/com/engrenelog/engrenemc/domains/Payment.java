@@ -13,7 +13,6 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.engrenelog.engrenemc.domains.enums.StatePayment;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -43,7 +42,7 @@ public abstract class Payment implements Serializable {
 	public Payment(Integer id, StatePayment statePay, OrderCustomer orderCustomer) {
 		super();
 		this.id = id;
-		this.statePay = (statePay==null) ? null: statePay.getID());
+		this.statePay = (statePay==null) ? null: statePay.getID();
 		this.orderCustomer = orderCustomer;
 	}
 
