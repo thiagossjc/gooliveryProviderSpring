@@ -56,7 +56,7 @@ public class Customer implements Serializable{
 		this.name = name;
 		this.email = email;
 		this.idCustmOrIdCompany = idCustmOrIdCompany;
-		this.typeC = typeC.getID();
+		this.typeC = (typeC == null) ? null : typeC.getID();
 	}
 
 	
