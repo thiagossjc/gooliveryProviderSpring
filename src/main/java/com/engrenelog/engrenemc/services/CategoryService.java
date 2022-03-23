@@ -1,4 +1,5 @@
 package com.engrenelog.engrenemc.services;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -11,61 +12,60 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.engrenelog.engrenemc.domains.Category;
+import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.dto.CategoryDTO;
 import com.engrenelog.engrenemc.repositorys.CategoryRepository;
 import com.engrenelog.engrenemc.services.exceptions.DataIntegrityException;
 
 @Service
 public class CategoryService {
-	
+
 	@Autowired
 	private CategoryRepository repo;
-	
+
 	public Category find(Integer id) {
-		 Optional<Category> obj = repo.findById(id); 
-		 return obj.orElseThrow(() -> new ObjectNotFoundException( 
-		  "Objeto não encontrado! Id: " + id + ", Categoria: " + Category.class.getName(), null)); 
+		Optional<Category> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Categoria: " + Category.class.getName(), null));
 	}
-	
+
 	public Category insert(Category obj) {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-	
+
 	public Category update(Category obj) {
 		Category newObj = find(obj.getId());
 		updateData(newObj,obj);
 		return repo.save(newObj);
-		find(obj.getId());
-		return repo.save(obj);
+
 	}
-	
+
 	public void delete(Integer id) {
 		find(id);
-		try { 
+		try {
 			repo.deleteById(id);
-		}
-		catch (DataIntegrityViolationException e) {
+		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("No es posible deletar unca categoria que possuí produtos");
 		}
 	}
-	
-	public List<Category> findAll(){
+
+	public List<Category> findAll() {
 		return repo.findAll();
 	}
-	
-	public Page<Category>FindPage(Integer page, Integer linesPerPage,String orderBy, String direction){
-			PageRequest pageRequest = PageRequest.of(page, 	linesPerPage, Direction.valueOf(direction),orderBy);
-			
-			return repo.findAll(pageRequest);
+
+	public Page<Category> FindPage(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+
+		return repo.findAll(pageRequest);
 	}
-	
+
 	public Category fromDTO(CategoryDTO objDto) {
-		return new Category(objDto.getId(),objDto.getName());
+		return new Category(objDto.getId(), objDto.getName());
 	}
-	
-	private  void updateData(CategoryDTO newObj, Category obj) {
+
+	private void updateData(Category newObj, Category obj) {
 		newObj.setName(obj.getName());
 	}
-	
+
 }
