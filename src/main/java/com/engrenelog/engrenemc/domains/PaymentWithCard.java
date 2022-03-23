@@ -3,8 +3,10 @@ package com.engrenelog.engrenemc.domains;
 import javax.persistence.Entity;
 
 import com.engrenelog.engrenemc.domains.enums.StatePayment;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 
 @Entity
+@JsonTypeName("paymentwithcard")
 public class PaymentWithCard extends Payment {
 
 	private static final long serialVersionUID = 1L;
@@ -15,7 +17,7 @@ public class PaymentWithCard extends Payment {
 	}
 
 
-
+	
 	public PaymentWithCard(Integer id, StatePayment statePay, OrderCustomer orderCustomer,Integer numberInstallments) {
 		super(id,statePay,orderCustomer);
 		this.numberInstallments = numberInstallments;
