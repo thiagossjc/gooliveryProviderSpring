@@ -18,7 +18,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class OrderCustomer implements Serializable {
@@ -59,6 +58,15 @@ public class OrderCustomer implements Serializable {
 		this.deliveryAddress = deliveryAddress;	
 	}
 
+	
+	public double getTotalPrice() {
+		double sum = 0.0;
+		for (OrderItem ip : itens) {
+			sum = sum + ip.getSubTotal();
+		}
+		return sum;
+	}
+	
 	public Integer getId() {
 		return id;
 	}

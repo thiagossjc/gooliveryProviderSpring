@@ -3,7 +3,6 @@ package com.engrenelog.engrenemc.domains;
 import java.io.Serializable;
 import java.util.Objects;
 
-import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -38,6 +37,13 @@ public class OrderItem implements Serializable{
 		this.quantity = quantity;
 		this.price = price;
 	}
+	
+	//get na frente del nombre para Json reconhecer e exibir
+	public double getSubTotal() { 
+		return (price - discount)* quantity;
+	}
+	
+	
 
 	@JsonIgnore
 	public OrderCustomer getOrderCustomer() {
