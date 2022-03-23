@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import com.engrenelog.engrenemc.domains.Category;
 import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.dto.ClientNewDTO;
 import com.engrenelog.engrenemc.dto.CustomerDTO;

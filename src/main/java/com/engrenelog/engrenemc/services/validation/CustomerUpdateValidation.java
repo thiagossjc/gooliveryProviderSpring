@@ -2,45 +2,46 @@ package com.engrenelog.engrenemc.services.validation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.HandlerMapping;
 
 import com.engrenelog.engrenemc.domains.Customer;
-import com.engrenelog.engrenemc.domains.enums.TypeCustomer;
-import com.engrenelog.engrenemc.dto.ClientNewDTO;
+import com.engrenelog.engrenemc.dto.CustomerDTO;
 import com.engrenelog.engrenemc.repositorys.CustomerRepository;
 import com.engrenelog.engrenemc.resources.exceptions.FieldMessage;
-import com.engrenelog.engrenemc.services.validation.utils.ValidationBR;
 
-public class CustomerInsertValidation implements ConstraintValidator<CustomerInsert, ClientNewDTO> {
+public class CustomerUpdateValidation implements ConstraintValidator<CustomerUpdate, CustomerDTO> {
+	
+	
+	@Autowired
+	private HttpServletRequest req; 
 	
 	@Autowired
 	private CustomerRepository repoCust;
 	
 	@Override
-	public void initialize(CustomerInsert ann) {
+	public void initialize(CustomerUpdate ann) {
 	}	
 
 	@Override
-	public boolean isValid(ClientNewDTO objDto, ConstraintValidatorContext context) {
+	public boolean isValid(CustomerDTO objDto, ConstraintValidatorContext context) {
 		
-		
+		//buscar o id da requisição
+		@SuppressWarnings("unchecked")
+		Map<String, String> map = (Map<String, String>) req.getAttribute(HandlerMapping.URI_TEMPLATE_VARIABLES_ATTRIBUTE);
+		Integer uriId =  Integer.parseInt(map.get("id"));
 		
 		List<FieldMessage> list = new ArrayList<>();
 
-		if (objDto.getTypeC().equals(TypeCustomer.PhisicalPerson.getID()) && !ValidationBR.isValidCPF(objDto.getIdCustmOrIdCompany())) {
-			list.add(new FieldMessage("CpfoCNPJ ","CPF inválido!"));
-		}
-		
-		if (objDto.getTypeC().equals(TypeCustomer.LegalPerson.getID()) && !ValidationBR.isValidCNPJ(objDto.getIdCustmOrIdCompany())) {
-			list.add(new FieldMessage("CpfoCNPJ ","CPF inválido!"));
-		}
 		
 		Customer aux = repoCust.findByEmail(objDto.getEmail());
-		if (aux != null) {
+		if (aux != null && !aux.getId().equals(uriId)) {
 			list.add(new FieldMessage("Email","Email já existente!"));
 		}
 		
