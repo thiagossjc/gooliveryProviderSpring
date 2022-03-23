@@ -12,7 +12,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.engrenelog.engrenemc.domains.Category;
-import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.dto.CategoryDTO;
 import com.engrenelog.engrenemc.repositorys.CategoryRepository;
 import com.engrenelog.engrenemc.services.exceptions.DataIntegrityException;
