@@ -66,7 +66,8 @@ public class OrderCustomerService {
 			
 		}
 		oiRepo.saveAll(obj.getItens());
-		emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationHtmlEmail(obj);
+		//emailService.sendOrderConfirmationEmail(obj);
 		//System.out.println(obj);
 		
 		return obj;
