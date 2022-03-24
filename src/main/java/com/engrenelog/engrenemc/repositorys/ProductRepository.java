@@ -14,11 +14,12 @@ import com.engrenelog.engrenemc.domains.Category;
 import com.engrenelog.engrenemc.domains.Product;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product,Integer> {
-	
-	@Transactional(readOnly=true)
-	@Query("SELECT DISTINCT obj FROM Product obj"
-			+ " INNER JOIN obj.categories cat WHERE  obj.name LIKE %:name% AND"
-			+ " cat IN :categories")
-	Page<Product> search(@Param("name") String name,@Param("categories") List<Category> categories,Pageable pageRequest);
+public interface ProductRepository extends JpaRepository<Product, Integer> {
+
+	@Transactional(readOnly = true)
+
+	@Query("SELECT DISTINCT obj FROM Product obj INNER JOIN obj.categorys cat WHERE obj.name LIKE %:name% AND cat IN :categorys")
+
+	Page<Product> search(@Param("name") String name, @Param("categorys") List<Category> categorys,
+			Pageable pageRequest);
 }

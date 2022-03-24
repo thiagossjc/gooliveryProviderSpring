@@ -15,31 +15,25 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.engrenelog.engrenemc.domains.OrderCustomer;
 import com.engrenelog.engrenemc.services.OrderCustomerService;
-import com.engrenelog.engrenemc.services.TicketService;
 
 @RestController
-@RequestMapping(value="/order")
-
+@RequestMapping(value = "/order")
 public class OrderCustomerResource {
 
 	@Autowired
 	private OrderCustomerService service;
-	
 
-	
-	@RequestMapping(value="/{id}",method=RequestMethod.GET)
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<OrderCustomer> find(@PathVariable Integer id) {
-	
+
 		OrderCustomer obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
-	
-	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@Valid @RequestBody OrderCustomer obj){
+
+	@RequestMapping(method = RequestMethod.POST)
+	public ResponseEntity<Void> insert(@Valid @RequestBody OrderCustomer obj) {
 		obj = service.insert(obj);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(obj.getId()).toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
-	
-}	
+}
