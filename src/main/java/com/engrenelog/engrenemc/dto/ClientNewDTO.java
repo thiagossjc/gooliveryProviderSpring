@@ -24,6 +24,10 @@ public class ClientNewDTO implements Serializable {
 	
 	
 	private Integer typeC;
+	
+	@NotEmpty(message="Preenchimento obrigatório!")
+	private String password;
+	
 	@NotEmpty
 	private String idCustmOrIdCompany;
 	
@@ -80,6 +84,14 @@ public class ClientNewDTO implements Serializable {
 		this.typeC = typeC;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
 	public String getStreet() {
 		return street;
 	}
@@ -142,7 +154,6 @@ public class ClientNewDTO implements Serializable {
 
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
-	}
-	
+	}	
 	
 }

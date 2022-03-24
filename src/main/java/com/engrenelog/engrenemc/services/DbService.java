@@ -1,24 +1,18 @@
 package com.engrenelog.engrenemc.services;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.engrenelog.engrenemc.domains.Address;
 import com.engrenelog.engrenemc.domains.Category;
 import com.engrenelog.engrenemc.domains.City;
 import com.engrenelog.engrenemc.domains.Customer;
-import com.engrenelog.engrenemc.domains.OrderCustomer;
-import com.engrenelog.engrenemc.domains.OrderItem;
-import com.engrenelog.engrenemc.domains.Payment;
-import com.engrenelog.engrenemc.domains.PaymentWithCard;
-import com.engrenelog.engrenemc.domains.PaymentWithTicket;
 import com.engrenelog.engrenemc.domains.Product;
 import com.engrenelog.engrenemc.domains.State;
-import com.engrenelog.engrenemc.domains.enums.StatePayment;
 import com.engrenelog.engrenemc.domains.enums.TypeCustomer;
 import com.engrenelog.engrenemc.repositorys.AddressRepository;
 import com.engrenelog.engrenemc.repositorys.CategoryRepository;
@@ -50,6 +44,8 @@ public class DbService {
 	private PaymentRepository paymRepo;
 	@Autowired
 	private OrderItemRepository ordItemRepo;
+	@Autowired
+	private BCryptPasswordEncoder bCrypt;
 
 	
 	
@@ -74,10 +70,10 @@ public class DbService {
 		City cit6 = new City(null,"Barueri",state3);
 		
 		
-		Customer cli1 = new Customer(null,"Maria Silva","maria@gmail.com","2343242342",TypeCustomer.PhisicalPerson);
+		Customer cli1 = new Customer(null,"Maria Silva","maria@gmail.com","2343242342",TypeCustomer.PhisicalPerson,bCrypt.encode("teste"));
 		cli1.getPhones().addAll(Arrays.asList("34324324","9823424"));
 		
-		Customer cli2 = new Customer(null,"José Silva","jose@gmail.com","2343242342",TypeCustomer.PhisicalPerson);
+		Customer cli2 = new Customer(null,"José Silva","jose@gmail.com","2343242342",TypeCustomer.PhisicalPerson,bCrypt.encode("teste"));
 		cli1.getPhones().addAll(Arrays.asList("34324324","9823424"));
 		
 		Address e1 = new Address(null,"Rua Maria Lobato","1","Copacabana", "25001",cli1,cit1);
