@@ -30,6 +30,11 @@ public class OrderCustomerService {
 	@Autowired
 	private OrderItemRepository oiRepo;
 	
+	@Autowired
+	private CustomerService customerService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	public OrderCustomer find(Integer id) {
 		Optional<OrderCustomer> obj = repo.findById(id);
@@ -42,6 +47,7 @@ public class OrderCustomerService {
 		obj.setId(null);
 		obj.getPayment().setStatePay(StatePayment.Pendente);
 		obj.setInstante(new Date());
+		obj.setCustomer(customerService.find(obj.getCustomer().getId()));
 		obj.getPayment().setOrderCustomer(obj);
 
 		if (obj.getPayment() instanceof PaymentWithTicket) {
@@ -54,11 +60,15 @@ public class OrderCustomerService {
 		
 		for (OrderItem oi : obj.getItens()) {
 			oi.setDiscount(0.0);
-			oi.setPrice(prodServ.find(oi.getProduct().getId()).getPrice());
+			oi.setProduct(prodServ.find(oi.getProduct().getId()));
+			oi.setPrice(oi.getProduct().getPrice());
 			oi.setOrderCustomer(obj);
 			
 		}
 		oiRepo.saveAll(obj.getItens());
+		emailService.sendOrderConfirmationEmail(obj);
+		//System.out.println(obj);
+		
 		return obj;
 	}
 }

@@ -1,6 +1,8 @@
 package com.engrenelog.engrenemc.domains;
  	
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.persistence.EmbeddedId;
@@ -13,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class OrderItem implements Serializable{
 	
 	
+
 	private static final long serialVersionUID = 1L;
 	
 	@JsonIgnore
@@ -112,4 +115,22 @@ public class OrderItem implements Serializable{
 		OrderItem other = (OrderItem) obj;
 		return Objects.equals(id, other.id);
 	}
+	
+	@Override
+	public String toString() {
+		NumberFormat numbFormt = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append(this.getProduct().getName());
+		builder.append(" , Quant: ");		
+		builder.append(this.getQuantity());
+		builder.append(", Unit Price: ");
+		builder.append(numbFormt.format(this.getPrice()));
+		builder.append(" ,SubTotal: ");
+		builder.append(numbFormt.format(this.getSubTotal()));
+		builder.append("\n");
+		builder.append("]");
+		return builder.toString();
+	}
+
 }

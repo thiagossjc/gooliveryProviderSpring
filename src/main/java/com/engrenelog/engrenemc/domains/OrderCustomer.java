@@ -1,8 +1,11 @@
 package com.engrenelog.engrenemc.domains;
 
 import java.io.Serializable;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 
@@ -23,31 +26,30 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class OrderCustomer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
-	@Column(name="id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	
-	@JsonFormat(pattern="dd/MM/yyyy HH:mm")
+
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instante;
-	
-	@OneToOne(cascade=CascadeType.ALL,mappedBy="orderCustomer")
+
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "orderCustomer")
 	private Payment payment;
-	
+
 	@ManyToOne
-	@JoinColumn(name="customer_id")
+	@JoinColumn(name = "customer_id")
 	private Customer customer;
-	
+
 	@ManyToOne
-	@JoinColumn(name="address_id")
+	@JoinColumn(name = "address_id")
 	private Address deliveryAddress;
-	
-	
-	@OneToMany(mappedBy="id.orderCustomer")
+
+	@OneToMany(mappedBy = "id.orderCustomer")
 	private Set<OrderItem> itens = new HashSet<>();
-	
-	public OrderCustomer(){
+
+	public OrderCustomer() {
 	}
 
 	public OrderCustomer(Integer id, Date instante, Customer customer, Address deliveryAddress) {
@@ -55,10 +57,9 @@ public class OrderCustomer implements Serializable {
 		this.id = id;
 		this.instante = instante;
 		this.customer = customer;
-		this.deliveryAddress = deliveryAddress;	
+		this.deliveryAddress = deliveryAddress;
 	}
 
-	
 	public double getTotalPrice() {
 		double sum = 0.0;
 		for (OrderItem ip : itens) {
@@ -66,7 +67,7 @@ public class OrderCustomer implements Serializable {
 		}
 		return sum;
 	}
-	
+
 	public Integer getId() {
 		return id;
 	}
@@ -83,8 +84,6 @@ public class OrderCustomer implements Serializable {
 		this.itens = itens;
 	}
 
-	
-	
 	public Date getInstante() {
 		return instante;
 	}
@@ -107,7 +106,7 @@ public class OrderCustomer implements Serializable {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	} 
+	}
 
 	public Address getDeliveryAddress() {
 		return deliveryAddress;
@@ -133,6 +132,28 @@ public class OrderCustomer implements Serializable {
 		OrderCustomer other = (OrderCustomer) obj;
 		return Objects.equals(id, other.id);
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		NumberFormat numbFormt = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+		SimpleDateFormat dtFormt = new SimpleDateFormat("dd/MM/yyy HH:mm:ss");
+		
+		StringBuilder builder = new StringBuilder();
+		builder.append("Number Order: ");
+		builder.append(this.getId());
+		builder.append(", Date Create Order: ");
+		builder.append(dtFormt.format(this.getInstante()));
+		builder.append(", Customer: ");
+		builder.append(this.getCustomer().getName());
+		builder.append(", Form of Payment: ");
+		builder.append(this.getPayment().getStatePay().getDescription());
+		builder.append("\n Detal: \n");
+		for (OrderItem oi : this.getItens()) {
+			builder.append(oi.toString());
+		}
+		builder.append("Total Price: ");
+		builder.append(numbFormt.format(this.getTotalPrice()));
+		return builder.toString();
+	}
+
 }
