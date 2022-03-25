@@ -19,6 +19,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import com.engrenelog.engrenemc.security.JWTAuthenticationFilter;
+import com.engrenelog.engrenemc.security.JWTAuthorizationFilter;
 import com.engrenelog.engrenemc.security.JWTUtil;
 
 @Configuration
@@ -51,12 +52,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		if(Arrays.asList(env.getActiveProfiles()).contains("test")) {
 			http.headers().frameOptions().disable();
 		}
-		http.addFilter(new JWTAuthenticationFilter(authenticationManager(),jwtUtil));
 		http.cors().and().csrf().disable();
 		//Só permitir get nos caras
 		http.authorizeHttpRequests().antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll();
 		http.authorizeHttpRequests().antMatchers(PUBLIC_MATCHERS).permitAll()
 		.anyRequest().authenticated();
+		http.addFilter(new JWTAuthenticationFilter(authenticationManager(),jwtUtil));
+		http.addFilter(new JWTAuthorizationFilter(authenticationManager(),jwtUtil,userDetailsService));
+		
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 	}
 	
