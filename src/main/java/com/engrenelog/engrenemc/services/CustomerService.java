@@ -15,12 +15,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.engrenelog.engrenemc.domains.Address;
 import com.engrenelog.engrenemc.domains.City;
 import com.engrenelog.engrenemc.domains.Customer;
+import com.engrenelog.engrenemc.domains.enums.Profile;
 import com.engrenelog.engrenemc.domains.enums.TypeCustomer;
 import com.engrenelog.engrenemc.dto.ClientNewDTO;
 import com.engrenelog.engrenemc.dto.CustomerDTO;
 import com.engrenelog.engrenemc.repositorys.AddressRepository;
 import com.engrenelog.engrenemc.repositorys.CityRepository;
 import com.engrenelog.engrenemc.repositorys.CustomerRepository;
+import com.engrenelog.engrenemc.security.UserSS;
+import com.engrenelog.engrenemc.services.exceptions.AuthorizationException;
 import com.engrenelog.engrenemc.services.exceptions.DataIntegrityException;
 
 @Service
@@ -40,6 +43,12 @@ public class CustomerService {
 	
 	
 	public Customer find(Integer id) {
+		//So permitir un usuário com o perfil diferente de administrador acessar seus dados
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasHole(Profile.Admin)&& !id.equals(user.GetId())) {
+			throw new AuthorizationException("Acesso negado!");
+		}
+		
 		 Optional<Customer> obj = repo.findById(id); 
 		 return obj.orElseThrow(() -> new ObjectNotFoundException( 
 		  "Objeto não encontrado! Id: " + id + ", Customer: " + Customer.class.getName(), null)); 

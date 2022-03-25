@@ -10,6 +10,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import com.engrenelog.engrenemc.services.exceptions.AuthorizationException;
 import com.engrenelog.engrenemc.services.exceptions.DataIntegrityException;
 
 @ControllerAdvice
@@ -41,6 +42,13 @@ public class ResourceExceptionHandler {
 	
 	}
 	
+	@ExceptionHandler(AuthorizationException.class)
+	public ResponseEntity<StandardError> authorization(AuthorizationException e,HttpServletRequest request){	
+		StandardError err = new StandardError(HttpStatus.FORBIDDEN.value(),e.getMessage(),System.currentTimeMillis());
+		//FORBIDDEN é o código http aceso negado.
+		return ResponseEntity.status(HttpStatus.FORBIDDEN).body(err);
+	}
+
 }
 	
 	

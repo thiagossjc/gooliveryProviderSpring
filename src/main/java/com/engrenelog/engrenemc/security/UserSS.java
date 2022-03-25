@@ -57,7 +57,7 @@ public class UserSS implements UserDetails{
 		// TODO Auto-generated method stub
 		return email;
 	}
-
+;
 	@Override
 	public boolean isAccountNonExpired() {
 		return true;
@@ -81,5 +81,7 @@ public class UserSS implements UserDetails{
 		return true;
 	}
 	
-	
+	public boolean hasHole(Profile profile) {
+			return 	getAuthorities().contains(new SimpleGrantedAuthority(profile.getDescription()));
+	}
 }
