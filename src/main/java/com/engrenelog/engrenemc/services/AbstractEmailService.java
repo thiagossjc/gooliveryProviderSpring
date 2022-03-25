@@ -13,16 +13,17 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
+import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.domains.OrderCustomer;
 
 public abstract class AbstractEmailService implements EmailService {
 
 	@Value("${default.sender}")
 	private String sender;
-	
+
 	@Autowired
 	private TemplateEngine templateEngine;
-	
+
 	@Autowired
 	private JavaMailSender javaMailSender;
 
@@ -42,34 +43,49 @@ public abstract class AbstractEmailService implements EmailService {
 		sm.setText(obj.toString());
 		return sm;
 	};
+
 	
+	public void sendNewPasswordEmail(Customer customer, String newPassword) {
+
+		SimpleMailMessage sm = prepareNewPasswordEmail(customer, newPassword);
+		sendEmail(sm);
+	}
+
 	protected String htmlFromTemplateOrder(OrderCustomer obj) {
 		Context context = new Context();
 		context.setVariable("order", obj);
 		return templateEngine.process("email/confirmationOrder", context);
 	}
-	
+
 	@Override
 	public void sendOrderConfirmationHtmlEmail(OrderCustomer obj) {
-		try {	
-			MimeMessage mm  = preperMimeMessageFromOrder(obj); 	
+		try {
+			MimeMessage mm = preperMimeMessageFromOrder(obj);
 			sendHtmlEmail(mm);
-		}	
-		catch (MessagingException e) {
+		} catch (MessagingException e) {
 			sendOrderConfirmationEmail(obj);
 		}
 	}
 
 	protected MimeMessage preperMimeMessageFromOrder(OrderCustomer obj) throws MessagingException {
-			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
-			MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage,true);
-			mmh.setTo(obj.getCustomer().getEmail());
-			mmh.setFrom(sender);
-			mmh.setSubject("Pedido confirmado! Cód. : " + obj.getId());
-			mmh.setSentDate(new Date(System.currentTimeMillis()));
-			mmh.setText(htmlFromTemplateOrder(obj),true);
-			return mimeMessage;
-			
-			 
+		MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+		MimeMessageHelper mmh = new MimeMessageHelper(mimeMessage, true);
+		mmh.setTo(obj.getCustomer().getEmail());
+		mmh.setFrom(sender);
+		mmh.setSubject("Pedido confirmado! Cód. : " + obj.getId());
+		mmh.setSentDate(new Date(System.currentTimeMillis()));
+		mmh.setText(htmlFromTemplateOrder(obj), true);
+		return mimeMessage;
+
+	}
+
+	protected SimpleMailMessage prepareNewPasswordEmail(Customer customer, String newPassword) {
+		SimpleMailMessage sm = new SimpleMailMessage();
+		sm.setTo(customer.getEmail());
+		sm.setFrom(sender);
+		sm.setSubject("Solicitação de nova senha: ");
+		sm.setSentDate(new Date(System.currentTimeMillis()));
+		sm.setText("Nova senha: " + newPassword);
+		return sm;
 	}
 }
