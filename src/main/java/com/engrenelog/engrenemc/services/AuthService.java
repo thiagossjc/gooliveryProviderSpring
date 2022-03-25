@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.engrenelog.engrenemc.domains.Customer;
 import com.engrenelog.engrenemc.repositorys.CustomerRepository;
+import com.engrenelog.engrenemc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class AuthService {
@@ -26,8 +27,8 @@ public class AuthService {
 	public void sendNewPassword(String email) {
 		Customer customer = repo.findByEmail(email);
 		if (customer == null){
-			//Aún tengo que implementar eso
-			//throw new ObjectNotFoundException("Email não encontrado");
+		
+			throw new ObjectNotFoundException("Email não encontrado");
 			
 		}
 		
