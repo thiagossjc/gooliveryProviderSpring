@@ -66,6 +66,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			response.setStatus(401);
 			response.setContentType("application/json");
 			response.getWriter().append(json());
+			response.addHeader("access-control-expose-headers","Authorization");
 		}
 
 		private String json(){
