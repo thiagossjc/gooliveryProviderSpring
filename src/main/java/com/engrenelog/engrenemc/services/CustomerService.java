@@ -90,6 +90,21 @@ public class CustomerService {
 			return repo.findAll(pageRequest);
 	}
 	
+	public Customer findByEmail(String email) {
+		UserSS user = UserService.authenticated();
+		if (user==null || !user.hasHole(Profile.Admin) && !email.equals(user.getUsername())) {
+			throw new AuthorizationException("Acesso negado!");
+			
+		}
+		Customer obj= repo.findByEmail(user.getUsername());
+		if (obj == null) {
+			throw new ObjectNotFoundException ("Objeto não encontrado! Id: " + user.GetId() + ", Tipo: " + Customer.class.getName(),null);	
+			
+		}
+		return obj;
+	}
+	
+	
 	public Customer fromDTO(CustomerDTO objDto) {
 		return new Customer(objDto.getId(),objDto.getName(),objDto.getEmail(),null,null,null);
 	}
